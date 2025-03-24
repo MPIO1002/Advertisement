@@ -1,18 +1,6 @@
-export interface User {
+export interface Banner {
     id: number;
-    name: string;
-    email: string;
-}
-
-export interface Product {
-    id: number;
-    name: string;
-    price: number;
-}
-
-export interface Order {
-    id: number;
-    userId: number;
-    productIds: number[];
-    totalAmount: number;
+    url: string;
+    title: string;
+    content: string;
 }

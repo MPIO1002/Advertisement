@@ -1,12 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Navbar from './components/navbar/navbar'
+import Hero from './components/hero-section/hero'
+import BannerSection from './components/banner-section/banner-section'
 
 function App() {
 
   return (
-    <div></div>
+    <>
+      <Navbar />
+      <Hero />
+      <BannerSection />
+    </>
   )
 }
 
