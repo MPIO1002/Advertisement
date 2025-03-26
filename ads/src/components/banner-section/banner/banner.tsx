@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface BannerData {
   id: number;
   url: string;
   title: string;
   content: string;
+  link: string;
 }
 
 const Banner = () => {
@@ -16,7 +17,7 @@ const Banner = () => {
       try {
         const response = await fetch('http://localhost:3000/banners');
         const data: BannerData[] = await response.json();
-        setBannerList(data); // Set the entire list of banners
+        setBannerList(data);
       } catch (error) {
         console.error('Failed to fetch banner data:', error);
       }
@@ -24,6 +25,17 @@ const Banner = () => {
 
     fetchBannerData();
   }, []);
+  
+  const handleBannerClick = (banner: BannerData) => {
+    // Send click event to Google Analytics
+    if (window.gtag) {
+      window.gtag('event', 'banner_click', {
+        event_category: 'Banner',
+        event_label: banner.title,
+        value: banner.id,
+      });
+    }
+  };
 
   if (bannerList.length === 0) {
     return <div className="text-center text-white">Loading...</div>;
@@ -32,8 +44,12 @@ const Banner = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {bannerList.map((banner) => (
-        <div
+        <a
           key={banner.id}
+          href={banner.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => handleBannerClick(banner)}
           className="relative w-full h-auto mx-auto rounded-lg overflow-hidden shadow-lg"
           style={{
             backgroundImage: `url(${banner.url})`,
@@ -55,7 +71,7 @@ const Banner = () => {
               XEM NGAY
             </button>
           </div>
-        </div>
+        </a>
       ))}
     </div>
   );
