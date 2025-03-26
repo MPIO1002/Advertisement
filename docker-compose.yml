@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   frontend:
     build:
@@ -19,6 +17,7 @@ services:
     environment:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
+      - DB_HOST=database
       - DB_NAME=ads
       - DB_PORT=5432
     depends_on:

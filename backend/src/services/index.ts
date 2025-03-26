@@ -1,6 +1,15 @@
 import pool from '../db/index';
 import { Banner } from '../models';
 
+(async () => {
+    try {
+        const result = await pool.query('SELECT 1');
+        console.log('Database connection successful:', result.rows);
+    } catch (error) {
+        console.error('Database connection failed:', error);
+    }
+})();
+
 export class Service {
     async addBanner(banner: Omit<Banner, 'id'>): Promise<Banner> {
         const result = await pool.query(
@@ -34,7 +43,12 @@ export class Service {
     }
 
     async getBanners(): Promise<Banner[]> {
-        const result = await pool.query('SELECT * FROM banner');
-        return result.rows;
+        try {
+            const result = await pool.query('SELECT * FROM banner');
+            return result.rows;
+        } catch (error) {
+            console.error('Error fetching banners:', error);
+            throw new Error('Failed to fetch banners');
+        }
     }
 }
