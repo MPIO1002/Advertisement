@@ -6,7 +6,7 @@ const AboutUs = () => {
         <div className="relative bg-[#ededed] text-[#222222] py-16 px-10">
             {/* Curve Image */}
             <img
-                src="/src/assets/curve-bg.png" // Replace with the actual path to your curve image
+                src="/assets/curve-bg.png" // Replace with the actual path to your curve image
                 alt="Curve Background"
                 className="absolute top-0 left-0 w-full h-4 sm:h-6 md:h-8 bg-no-repeat bg-cover transform scale-y-[-1] z-10"
             />
