@@ -16,7 +16,7 @@ const HeroCarousel = () => {
 
     useEffect(() => {
         // Fetch banners from API using fetch
-        fetch('http://localhost:3000/banners')
+        fetch('http://103.92.25.7:4000/banners')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -112,7 +112,7 @@ const HeroCarousel = () => {
                 {/* Curve Background */}
                 <div
                     className="absolute bottom-0 left-0 w-full h-4 sm:h-6 md:h-8 bg-no-repeat bg-cover z-10"
-                    style={{ backgroundImage: "url('/src/assets/curve-bg.png')" }}
+                    style={{ backgroundImage: "url('/assets/curve-bg.png')" }}
                 ></div>
             </div>
 
