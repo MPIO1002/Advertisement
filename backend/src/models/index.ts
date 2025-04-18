@@ -1,6 +1,9 @@
 export interface Banner {
     id: number;
-    url: string;
-    title: string;
-    content: string;
+    image: string;
+    name: string;
+    description: string;
+    link: string;
+    logo: string;
+    video: string;
 }

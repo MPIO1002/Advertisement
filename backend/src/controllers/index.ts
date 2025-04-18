@@ -19,32 +19,35 @@ class IndexController {
     }
 
     private initializeRoutes() {
-        this.router.post('/banners', this.addBanner.bind(this));
+        // this.router.post('/banners', this.addBanner.bind(this));
         this.router.put('/banners/:id', this.updateBanner.bind(this));
         this.router.delete('/banners/:id', this.deleteBanner.bind(this));
         this.router.get('/banners', this.getBanners.bind(this));
     }
 
-    private async addBanner(req: Request, res: Response): Promise<void> {
-        try {
-            const { title, content, image } = req.body;
+    // private async addBanner(req: Request, res: Response): Promise<void> {
+    //     try {
+    //         const { name, description, image } = req.body;
 
-            // Upload image to Cloudinary
-            const uploadResponse = await cloudinary.uploader.upload(image, {
-                folder: 'banners',
-            });
+    //         // Upload image to Cloudinary
+    //         const uploadResponse = await cloudinary.uploader.upload(image, {
+    //             folder: 'banners',
+    //         });
 
-            const newBanner = await this.service.addBanner({
-                url: uploadResponse.secure_url,
-                title,
-                content,
-            });
+    //         const newBanner = await this.service.addBanner({
+    //             image: uploadResponse.secure_url,
+    //             name,
+    //             description,
+    //             link: '',
+    //             logo: '',
+    //             video: ''
+    //         });
 
-            res.status(201).json(newBanner);
-        } catch (error) {
-            res.status(500).json({ error: 'Failed to add banner' });
-        }
-    }
+    //         res.status(201).json(newBanner);
+    //     } catch (error) {
+    //         res.status(500).json({ error: 'Failed to add banner' });
+    //     }
+    // }
 
     private async updateBanner(req: Request, res: Response): Promise<void> {
         try {
