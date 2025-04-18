@@ -2,7 +2,7 @@ import Logo from '../../assets/logo.png';
 
 const Navbar = () => {
   return (
-    <nav className="bg-[#222222] text-white fixed w-full z-50">
+    <nav className="bg-[#222222e7] text-white fixed w-full z-50">
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
         <div className="flex items-center">
@@ -10,7 +10,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-6">
+        <ul className="hidden md:flex space-x-10">
           <li>
             <a href="#home" className="hover:text-gray-400">
               Trang chủ

@@ -14,6 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Service = void 0;
 const index_1 = __importDefault(require("../db/index"));
+(() => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield index_1.default.query('SELECT 1');
+        console.log('Database connection successful:', result.rows);
+    }
+    catch (error) {
+        console.error('Database connection failed:', error);
+    }
+}))();
 class Service {
     addBanner(banner) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -46,8 +55,14 @@ class Service {
     }
     getBanners() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield index_1.default.query('SELECT * FROM banner');
-            return result.rows;
+            try {
+                const result = yield index_1.default.query('SELECT * FROM banner');
+                return result.rows;
+            }
+            catch (error) {
+                console.error('Error fetching banners:', error);
+                throw new Error('Failed to fetch banners');
+            }
         });
     }
 }

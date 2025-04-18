@@ -13,8 +13,8 @@ import { Banner } from '../models';
 export class Service {
     async addBanner(banner: Omit<Banner, 'id'>): Promise<Banner> {
         const result = await pool.query(
-            'INSERT INTO banner (url, title, content) VALUES ($1, $2, $3) RETURNING *',
-            [banner.url, banner.title, banner.content]
+            'INSERT INTO banner (image, name, description) VALUES ($1, $2, $3) RETURNING *',
+            [banner.image, banner.name, banner.description]
         );
         return result.rows[0];
     }
