@@ -20,7 +20,7 @@ const BannerSection = () => {
     // Fetch data from the API
     const fetchBannerData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/banners');
+        const response = await fetch('http://103.92.25.7:4000/banners');
         const data: BannerData[] = await response.json();
         setBannerList(data);
       } catch (error) {
