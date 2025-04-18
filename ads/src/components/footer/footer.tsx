@@ -8,7 +8,7 @@ const Footer = () => {
                 {/* Logo Section */}
                 <div className="flex flex-col items-center justify-center">
                     <img
-                        src="/src/assets/logo.png" // Replace with the actual path to your logo
+                        src="/assets/logo.png" // Replace with the actual path to your logo
                         alt="GGO Logo"
                         className="w-40 md:w-60 mb-4"
                     />
