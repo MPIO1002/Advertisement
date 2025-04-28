@@ -31,7 +31,7 @@ app.get('/proxy', (req, res) => {
     };
 
     request(options)
-        .on('response', (response) => {
+        .on('response', (response: request.Response) => {
             res.setHeader('Content-Type', response.headers['content-type'] || 'video/mp4');
             res.setHeader('Accept-Ranges', 'bytes');
             res.setHeader('Content-Range', response.headers['content-range'] || '');
