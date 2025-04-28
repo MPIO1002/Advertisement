@@ -169,7 +169,7 @@ const HeroCarousel = () => {
 
                 {/* Curve Background */}
                 <div
-                    className="absolute bottom-0 left-0 w-full h-4 sm:h-6 md:h-8 bg-no-repeat bg-cover z-10"
+                    className="absolute bottom-0 left-0 w-full h-2 sm:h-6 md:h-8 bg-no-repeat bg-cover z-10"
                     style={{ backgroundImage: "url('/assets/curve-bg.png')" }}
                 ></div>
             </div>
