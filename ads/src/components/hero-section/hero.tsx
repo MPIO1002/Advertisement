@@ -87,14 +87,14 @@ const HeroCarousel = () => {
 
     const handleBannerClick = (banner: Banner) => {
         if (window.gtag) {
-          window.gtag('event', 'banner_click', {
-            event_category: 'Hero Banner',
-            event_label: banner.name,
-            value: banner.id,
-          });
+            window.gtag('event', 'banner_click', {
+                event_category: 'Hero Banner',
+                event_label: banner.name,
+                value: banner.id,
+            });
         }
         window.location.href = banner.link; // Navigate to the banner's link
-      };
+    };
 
     // Swipeable handlers
     const handlers = useSwipeable({
@@ -119,13 +119,15 @@ const HeroCarousel = () => {
                             ref={(el) => {
                                 videoRefs.current[index] = el!;
                             }}
-                            src={banner.video}
                             loop={false}
-                            muted
+                            muted={true}
+                            playsInline
                             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                             onEnded={handleNext}
                             controls={isMobile && isPlaying} // Show controls only on mobile when playing
-                        ></video>
+                        >
+                            <source src={banner.video} type="video/mp4" />
+                        </video>
 
                         {/* Play Button for Mobile */}
                         {isMobile && !isPlaying && index === currentIndex && (
