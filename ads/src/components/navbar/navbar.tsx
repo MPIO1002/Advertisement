@@ -1,6 +1,20 @@
 import Logo from '../../../public/assets/logo.png';
 
 const Navbar = () => {
+  const scrollToFooter = () => {
+    const footer = document.querySelector('footer');
+    if (footer) {
+      footer.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToHero = () => {
+    const hero = document.querySelector('#default-carousel');
+    if (hero) {
+      hero.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav className="bg-[#222222e7] text-white fixed w-full z-50">
       <div className="container mx-auto flex items-center justify-between p-4">
@@ -12,17 +26,26 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-10">
           <li>
-            <a href="#home" className="hover:text-gray-400">
+            <a
+              href="#home"
+              className="hover:text-gray-400"
+              onClick={(e) => {
+                e.preventDefault(); // Prevent default anchor behavior
+                scrollToHero();
+              }}
+            >
               Trang chủ
             </a>
           </li>
           <li>
-            <a href="#about" className="hover:text-gray-400">
-              Về chúng tôi
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="hover:text-gray-400">
+            <a
+              href="#contact"
+              className="hover:text-gray-400"
+              onClick={(e) => {
+                e.preventDefault(); // Prevent default anchor behavior
+                scrollToFooter();
+              }}
+            >
               Liên hệ
             </a>
           </li>
@@ -62,17 +85,26 @@ const Navbar = () => {
       >
         <ul className="flex flex-col space-y-2 p-4">
           <li>
-            <a href="#home" className="hover:text-gray-400">
+            <a
+              href="#home"
+              className="hover:text-gray-400"
+              onClick={(e) => {
+                e.preventDefault(); // Prevent default anchor behavior
+                scrollToHero();
+              }}
+            >
               Trang chủ
             </a>
           </li>
           <li>
-            <a href="#about" className="hover:text-gray-400">
-              Về chúng tôi
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="hover:text-gray-400">
+            <a
+              href="#contact"
+              className="hover:text-gray-400"
+              onClick={(e) => {
+                e.preventDefault(); // Prevent default anchor behavior
+                scrollToFooter();
+              }}
+            >
               Liên hệ
             </a>
           </li>
