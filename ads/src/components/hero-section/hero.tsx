@@ -32,7 +32,7 @@ const HeroCarousel = () => {
 
     useEffect(() => {
         // Fetch banners from API
-        fetch('http://103.92.25.7:4000/banners')
+        fetch('https://103.92.25.7:4000/banners')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
