@@ -12,10 +12,26 @@ interface Banner {
 const HeroCarousel = () => {
     const [banners, setBanners] = useState<Banner[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const videoRefs = useRef<HTMLVideoElement[]>([]);
 
     useEffect(() => {
-        // Fetch banners from API using fetch
+        // Detect if the screen is mobile
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        handleResize(); // Check on initial render
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        // Fetch banners from API
         fetch('http://103.92.25.7:4000/banners')
             .then((response) => {
                 if (!response.ok) {
@@ -32,36 +48,41 @@ const HeroCarousel = () => {
     }, []);
 
     useEffect(() => {
-        // Play the first video after banners are loaded
-        if (banners.length > 0 && videoRefs.current[0]) {
-            videoRefs.current[0].play().catch((error) => {
-                console.error('Error playing the first video:', error);
+        if (!isMobile) {
+            // Pause all videos and play the current one on desktop
+            videoRefs.current.forEach((video, index) => {
+                if (video) {
+                    if (index === currentIndex) {
+                        video.play().catch((error) => {
+                            console.error('Error playing video:', error);
+                        });
+                    } else {
+                        video.pause();
+                        video.currentTime = 0; // Reset video to the beginning
+                    }
+                }
             });
         }
-    }, [banners]);
-
-    useEffect(() => {
-        // Pause all videos and play the current one
-        videoRefs.current.forEach((video, index) => {
-            if (video) {
-                if (index === currentIndex) {
-                    video.play().catch((error) => {
-                        console.error('Error playing video:', error);
-                    });
-                } else {
-                    video.pause();
-                    video.currentTime = 0; // Reset video to the beginning
-                }
-            }
-        });
-    }, [currentIndex]);
+    }, [currentIndex, isMobile]);
 
     const handlePrev = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + banners.length) % banners.length);
+        setIsPlaying(false); // Reset play state
     };
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+        setIsPlaying(false); // Reset play state
+    };
+
+    const handlePlay = () => {
+        setIsPlaying(true);
+        const currentVideo = videoRefs.current[currentIndex];
+        if (currentVideo) {
+            currentVideo.play().catch((error) => {
+                console.error('Error playing video:', error);
+            });
+        }
     };
 
     // Swipeable handlers
@@ -88,11 +109,35 @@ const HeroCarousel = () => {
                                 videoRefs.current[index] = el!;
                             }}
                             src={banner.video}
-                            loop={false} // Disable looping for event handling
+                            loop={false}
                             muted
                             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                            onEnded={handleNext} // Trigger next video when current video ends
+                            onEnded={handleNext}
+                            controls={isMobile && isPlaying} // Show controls only on mobile when playing
                         ></video>
+
+                        {/* Play Button for Mobile */}
+                        {isMobile && !isPlaying && index === currentIndex && (
+                            <button
+                                className="absolute inset-0 flex items-center justify-center bg-black/50 text-white rounded-full"
+                                onClick={handlePlay}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={2}
+                                    stroke="currentColor"
+                                    className="w-12 h-12"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M5.25 5.25v13.5L19.5 12 5.25 5.25z"
+                                    />
+                                </svg>
+                            </button>
+                        )}
 
                         {/* Button for Each Video */}
                         {index === currentIndex && (
