@@ -128,7 +128,7 @@ const HeroCarousel = () => {
                                     viewBox="0 0 24 24"
                                     strokeWidth={2}
                                     stroke="currentColor"
-                                    className="w-12 h-12"
+                                    className="w-12 h-12 border border-white rounded-full p-4"
                                 >
                                     <path
                                         strokeLinecap="round"
