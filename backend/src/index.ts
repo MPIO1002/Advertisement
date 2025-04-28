@@ -11,7 +11,9 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(json());
-app.use(cors()); // Enable CORS for all origins
+app.use(cors({
+    exposedHeaders: ['Content-Range', 'Accept-Ranges'],
+}));
 
 // Routes
 const indexController = new IndexController();

@@ -26,7 +26,7 @@ const index_1 = __importDefault(require("../db/index"));
 class Service {
     addBanner(banner) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield index_1.default.query('INSERT INTO banner (url, title, content) VALUES ($1, $2, $3) RETURNING *', [banner.url, banner.title, banner.content]);
+            const result = yield index_1.default.query('INSERT INTO banner (image, name, description) VALUES ($1, $2, $3) RETURNING *', [banner.image, banner.name, banner.description]);
             return result.rows[0];
         });
     }

@@ -13,7 +13,9 @@ const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 // Middleware
 app.use((0, body_parser_1.json)());
-app.use((0, cors_1.default)()); // Enable CORS for all origins
+app.use((0, cors_1.default)({
+    exposedHeaders: ['Content-Range', 'Accept-Ranges'],
+}));
 // Routes
 const indexController = new controllers_1.default();
 app.use('/', indexController.router);
