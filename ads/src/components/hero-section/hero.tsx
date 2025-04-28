@@ -85,6 +85,17 @@ const HeroCarousel = () => {
         }
     };
 
+    const handleBannerClick = (banner: Banner) => {
+        if (window.gtag) {
+          window.gtag('event', 'banner_click', {
+            event_category: 'Hero Banner',
+            event_label: banner.name,
+            value: banner.id,
+          });
+        }
+        window.location.href = banner.link; // Navigate to the banner's link
+      };
+
     // Swipeable handlers
     const handlers = useSwipeable({
         onSwipedLeft: handleNext,
@@ -119,7 +130,7 @@ const HeroCarousel = () => {
                         {/* Play Button for Mobile */}
                         {isMobile && !isPlaying && index === currentIndex && (
                             <button
-                                className="absolute inset-0 flex items-center justify-center bg-black/50 text-white rounded-full"
+                                className="absolute inset-0 flex items-center justify-center text-white rounded-full"
                                 onClick={handlePlay}
                             >
                                 <svg
@@ -145,7 +156,7 @@ const HeroCarousel = () => {
                                 <button
                                     type="button"
                                     className="px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-2 text-sm sm:text-base lg:text-xl text-white bg-[#333333e6] rounded-sm hover:bg-[#222222e6] focus:outline-none cursor-pointer"
-                                    onClick={() => window.location.href = banner.link}
+                                    onClick={() => handleBannerClick(banner)}
                                 >
                                     KHÁM PHÁ NGAY
                                 </button>
