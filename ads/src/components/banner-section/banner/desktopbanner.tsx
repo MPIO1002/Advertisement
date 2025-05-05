@@ -8,6 +8,7 @@ interface BannerData {
   logo: string;
   video: string;
   link: string;
+  horizon_img: string;
 }
 
 interface DesktopBannerProps {
