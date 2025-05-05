@@ -8,7 +8,7 @@ interface BannerData {
     link: string;
     video: string;
     logo: string;
-    horizon_img: string; 
+    horizon_img: string;
 }
 
 interface MobileBannerProps {
@@ -31,8 +31,18 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
         <div className="grid grid-cols-1 gap-4 p-4 bg-white">
             {/* Modal for Video */}
             {selectedVideo && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-                    <div className="relative w-full max-w-4xl">
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center"
+                    onClick={closeModal} // Close modal when clicking outside
+                >
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black opacity-75"></div>
+
+                    {/* Modal Content */}
+                    <div
+                        className="relative w-full max-w-4xl z-10"
+                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+                    >
                         <button
                             className="absolute top-2 right-2 text-white text-2xl"
                             onClick={closeModal}
