@@ -6,4 +6,5 @@ export interface Banner {
     link: string;
     logo: string;
     video: string;
+    horizon_img: string;
 }
