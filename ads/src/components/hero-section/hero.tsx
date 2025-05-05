@@ -7,6 +7,7 @@ interface Banner {
     name: string;
     description: string;
     link: string;
+    horizon_img: string;
 }
 
 const HeroCarousel = () => {
@@ -14,6 +15,7 @@ const HeroCarousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [selectedVideo, setSelectedVideo] = useState<string | null>(null); // State for modal video
     const videoRefs = useRef<HTMLVideoElement[]>([]);
 
     useEffect(() => {
@@ -47,42 +49,12 @@ const HeroCarousel = () => {
             });
     }, []);
 
-    useEffect(() => {
-        if (!isMobile) {
-            // Pause all videos and play the current one on desktop
-            videoRefs.current.forEach((video, index) => {
-                if (video) {
-                    if (index === currentIndex) {
-                        video.play().catch((error) => {
-                            console.error('Error playing video:', error);
-                        });
-                    } else {
-                        video.pause();
-                        video.currentTime = 0; // Reset video to the beginning
-                    }
-                }
-            });
-        }
-    }, [currentIndex, isMobile]);
-
-    const handlePrev = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + banners.length) % banners.length);
-        setIsPlaying(false); // Reset play state
+    const handlePlay = (video: string) => {
+        setSelectedVideo(video); // Open modal with the selected video
     };
 
-    const handleNext = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-        setIsPlaying(false); // Reset play state
-    };
-
-    const handlePlay = () => {
-        setIsPlaying(true);
-        const currentVideo = videoRefs.current[currentIndex];
-        if (currentVideo) {
-            currentVideo.play().catch((error) => {
-                console.error('Error playing video:', error);
-            });
-        }
+    const closeModal = () => {
+        setSelectedVideo(null); // Close the modal
     };
 
     const handleBannerClick = (banner: Banner) => {
@@ -98,14 +70,44 @@ const HeroCarousel = () => {
 
     // Swipeable handlers
     const handlers = useSwipeable({
-        onSwipedLeft: handleNext,
-        onSwipedRight: handlePrev,
+        onSwipedLeft: () => setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length),
+        onSwipedRight: () => setCurrentIndex((prevIndex) => (prevIndex - 1 + banners.length) % banners.length),
         preventScrollOnSwipe: true,
         trackMouse: true, // Allows swipe gestures with a mouse (optional)
     });
 
     return (
         <div {...handlers} id="default-carousel" className="relative w-full" data-carousel="slide">
+            {/* Modal for Video */}
+            {selectedVideo && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center"
+                    onClick={closeModal} // Close modal when clicking outside
+                >
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black opacity-75"></div>
+
+                    {/* Modal Content */}
+                    <div
+                        className="relative w-full max-w-4xl z-10"
+                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+                    >
+                        <button
+                            className="absolute top-2 right-2 text-white text-2xl"
+                            onClick={closeModal}
+                        >
+                            &times;
+                        </button>
+                        <video
+                            src={selectedVideo}
+                            controls
+                            autoPlay
+                            className="w-full h-auto rounded-lg"
+                        />
+                    </div>
+                </div>
+            )}
+
             {/* Carousel Wrapper */}
             <div className="relative h-56 sm:h-96 xl:h-[calc(80vh)] overflow-hidden">
                 {banners.map((banner, index) => (
@@ -115,25 +117,32 @@ const HeroCarousel = () => {
                             }`}
                         data-carousel-item
                     >
-                        <video
-                            ref={(el) => {
-                                videoRefs.current[index] = el!;
-                            }}
-                            loop={false}
-                            muted={true}
-                            playsInline
-                            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                            onEnded={handleNext}
-                            controls={isMobile && isPlaying} // Show controls only on mobile when playing
-                        >
-                            <source src={banner.video} type="video/mp4" />
-                        </video>
+                        {isMobile ? (
+                            <img
+                                src={banner.horizon_img} // Show horizon_img on mobile
+                                alt={banner.name}
+                                className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                            />
+                        ) : (
+                            <video
+                                ref={(el) => {
+                                    videoRefs.current[index] = el!;
+                                }}
+                                loop={false}
+                                muted={true}
+                                playsInline
+                                className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                onEnded={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length)}
+                            >
+                                <source src={banner.video} type="video/mp4" />
+                            </video>
+                        )}
 
                         {/* Play Button for Mobile */}
-                        {isMobile && !isPlaying && index === currentIndex && (
+                        {isMobile && (
                             <button
                                 className="absolute inset-0 flex items-center justify-center text-white rounded-full"
-                                onClick={handlePlay}
+                                onClick={() => handlePlay(banner.video)}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -166,81 +175,7 @@ const HeroCarousel = () => {
                         )}
                     </div>
                 ))}
-
-                {/* Curve Background */}
-                <div
-                    className="absolute bottom-0 left-0 w-full h-2 sm:h-6 md:h-8 bg-no-repeat bg-cover z-10"
-                    style={{ backgroundImage: "url('/assets/curve-bg.png')" }}
-                ></div>
             </div>
-
-            {/* Slider Indicators */}
-            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-2 sm:space-x-3 md:space-x-4 rtl:space-x-reverse">
-                {banners.map((_, index) => (
-                    <button
-                        key={index}
-                        type="button"
-                        className={`w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-500'
-                            }`}
-                        aria-current={index === currentIndex}
-                        aria-label={`Slide ${index + 1}`}
-                        onClick={() => setCurrentIndex(index)}
-                        data-carousel-slide-to={index}
-                    ></button>
-                ))}
-            </div>
-
-            {/* Slider Controls */}
-            <button
-                type="button"
-                className="absolute top-0 start-0 z-30 hidden md:flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                onClick={handlePrev}
-                data-carousel-prev
-            >
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg
-                        className="w-4 h-4 text-white rtl:rotate-180"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 6 10"
-                    >
-                        <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 1 1 5l4 4"
-                        />
-                    </svg>
-                    <span className="sr-only">Previous</span>
-                </span>
-            </button>
-            <button
-                type="button"
-                className="absolute top-0 end-0 z-30 hidden md:flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                onClick={handleNext}
-                data-carousel-next
-            >
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg
-                        className="w-4 h-4 text-white rtl:rotate-180"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 6 10"
-                    >
-                        <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="m1 9 4-4-4-4"
-                        />
-                    </svg>
-                    <span className="sr-only">Next</span>
-                </span>
-            </button>
         </div>
     );
 };
