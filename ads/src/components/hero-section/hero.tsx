@@ -13,7 +13,6 @@ interface Banner {
 const HeroCarousel = () => {
     const [banners, setBanners] = useState<Banner[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState<string | null>(null); // State for modal video
     const videoRefs = useRef<HTMLVideoElement[]>([]);

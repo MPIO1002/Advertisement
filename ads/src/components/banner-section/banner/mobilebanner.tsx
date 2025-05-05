@@ -80,7 +80,7 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                                 className="rounded-t w-full h-auto"
                             />
                             <button
-                                className="absolute inset-0 flex items-center justify-center text-white bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-300"
+                                className="absolute z-50 inset-0 flex items-center justify-center text-white rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-300"
                                 onClick={(e) => {
                                     e.preventDefault(); // Prevent navigation
                                     handlePlay(banner.video); // Open the modal with the video
