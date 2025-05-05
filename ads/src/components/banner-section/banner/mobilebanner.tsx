@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface BannerData {
     id: number;
@@ -17,6 +17,16 @@ interface MobileBannerProps {
 
 const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
     const [playingVideoId, setPlayingVideoId] = useState<number | null>(null);
+    const videoRefs = useRef<HTMLVideoElement[]>([]); // Store refs for all videos
+
+    useEffect(() => {
+        // Ensure all videos start at the first second
+        videoRefs.current.forEach((video) => {
+            if (video) {
+                video.currentTime = 1; // Set video to start at 1 seconds
+            }
+        });
+    }, [bannerList]);
 
     const handlePlay = (id: number) => {
         setPlayingVideoId(id);
@@ -24,14 +34,27 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
 
     return (
         <div className="grid grid-cols-1 gap-4 p-4 bg-white">
-            {bannerList.map((banner) => (
+            {bannerList.map((banner, index) => (
                 <div
                     key={banner.id}
                     className="relative max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm"
                 >
-                    <a href={banner.link} target="_blank" rel="noopener noreferrer" onClick={() => onBannerClick(banner)}>
+                    <a
+                        href={banner.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                            if (playingVideoId !== null) {
+                                e.preventDefault(); // Prevent navigation if video is playing
+                            }
+                            onBannerClick(banner);
+                        }}
+                    >
                         <div className="relative">
                             <video
+                                ref={(el) => {
+                                    if (el) videoRefs.current[index] = el;
+                                }}
                                 className="rounded-t"
                                 src={banner.video}
                                 controls={playingVideoId === banner.id} // Show controls only for the playing video
@@ -84,6 +107,9 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-[#333333] rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300"
+                                onClick={(e) => {
+                                    e.stopPropagation(); // Ensure only this button triggers navigation
+                                }}
                             >
                                 XEM
                             </a>
