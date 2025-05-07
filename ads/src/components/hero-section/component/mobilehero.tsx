@@ -49,6 +49,8 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
     preventScrollOnSwipe: true,
   });
 
+  console.log('Banner List:', bannerList);
+
   return (
     <div className="relative w-full" {...handlers}>
       {/* Modal for Video */}
