@@ -87,7 +87,7 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
               className="w-full h-auto"
             />
             <button
-              className="absolute inset-0 flex items-center justify-center text-white rounded-full"
+              className="absolute flex items-center justify-center text-white rounded-full w-12 h-12 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
               onClick={() => handlePlay(banner.video)}
             >
               <svg
