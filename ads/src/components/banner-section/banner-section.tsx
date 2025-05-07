@@ -63,7 +63,7 @@ const BannerSection = () => {
     <section className="bg-[#f7f9fa] py-8">
       {/* Title */}
       <div className="container mx-auto text-center">
-        <h1 className="text-3xl font-bold text-gray-800">TOP GAMES</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-1">TOP GAMES</h1>
       </div>
 
       {/* Banner */}

@@ -60,18 +60,14 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
             className="relative w-full max-w-4xl z-10"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              className="absolute top-2 right-2 text-white text-xl"
-              onClick={closeModal}
-            >
-              &times;
-            </button>
-            <video
-              src={selectedVideo}
-              controls
-              autoPlay
-              className="w-full h-auto rounded-lg"
-            />
+            {selectedVideo && ( // Kiểm tra trạng thái trước khi hiển thị video
+              <video
+                src={selectedVideo}
+                controls
+                autoPlay
+                className="w-full h-auto"
+              />
+            )}
           </div>
         </div>
       )}
@@ -81,9 +77,8 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
         {bannerList.map((banner, index) => (
           <div
             key={banner.id}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'
+              }`}
           >
             <img
               src={banner.horizon_img}
@@ -119,9 +114,8 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
           <button
             key={index}
             type="button"
-            className={`w-2 h-2 rounded-full ${
-              index === currentIndex ? 'bg-white' : 'bg-gray-400'
-            }`}
+            className={`w-2 h-2 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-gray-400'
+              }`}
             aria-current={index === currentIndex}
             aria-label={`Slide ${index + 1}`}
             onClick={() => handleDotClick(index)}
