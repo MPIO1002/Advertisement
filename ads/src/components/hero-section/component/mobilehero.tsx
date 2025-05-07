@@ -27,17 +27,20 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerList.length);
+    const nextIndex = (currentIndex + 1) % bannerList.length;
+    setCurrentIndex(nextIndex);
+    setSelectedVideo(bannerList[nextIndex].video); // Cập nhật video tương ứng
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? bannerList.length - 1 : prevIndex - 1
-    );
+    const prevIndex = currentIndex === 0 ? bannerList.length - 1 : currentIndex - 1;
+    setCurrentIndex(prevIndex);
+    setSelectedVideo(bannerList[prevIndex].video); // Cập nhật video tương ứng
   };
 
   const handleDotClick = (index: number) => {
     setCurrentIndex(index);
+    setSelectedVideo(bannerList[index].video); // Cập nhật video tương ứng
   };
 
   // Swipeable handlers
@@ -60,14 +63,12 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
             className="relative w-full max-w-4xl z-10"
             onClick={(e) => e.stopPropagation()}
           >
-            {selectedVideo && ( // Kiểm tra trạng thái trước khi hiển thị video
-              <video
-                src={selectedVideo}
-                controls
-                autoPlay
-                className="w-full h-auto"
-              />
-            )}
+            <video
+              src={selectedVideo}
+              controls
+              autoPlay
+              className="w-full h-auto"
+            />
           </div>
         </div>
       )}
