@@ -19,7 +19,9 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const handlePlay = (video: string) => {
-    setSelectedVideo(video); // Set the selected video to display in the modal
+    console.log('Current Index:', currentIndex); // Debug giá trị currentIndex
+    console.log('Selected Video:', video); // Debug URL video được chọn
+    setSelectedVideo(video); // Cập nhật video được chọn
   };
 
   const closeModal = () => {

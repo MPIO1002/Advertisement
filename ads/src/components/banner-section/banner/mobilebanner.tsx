@@ -43,17 +43,11 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                         className="relative w-full max-w-4xl z-10"
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
                     >
-                        <button
-                            className="absolute top-2 right-2 text-white text-2xl"
-                            onClick={closeModal}
-                        >
-                            &times;
-                        </button>
                         <video
                             src={selectedVideo}
                             controls
                             autoPlay
-                            className="w-full h-auto rounded-lg"
+                            className="w-full h-auto"
                         />
                     </div>
                 </div>
