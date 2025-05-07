@@ -79,7 +79,7 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
         {bannerList.map((banner, index) => (
           <div
             key={banner.id}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
               }`}
           >
             <img
