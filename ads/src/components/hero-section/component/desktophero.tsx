@@ -41,7 +41,7 @@ const DesktopHero: React.FC<DesktopHeroProps> = ({ bannerList }) => {
                         data-carousel-item
                     >
                         <video
-                            autoPlay={index === currentIndex}
+                            autoPlay
                             loop
                             muted
                             playsInline
