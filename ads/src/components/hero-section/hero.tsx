@@ -117,50 +117,52 @@ const HeroCarousel = () => {
                         data-carousel-item
                     >
                         {isMobile ? (
-                            <img
-                                src={banner.horizon_img} // Show horizon_img on mobile
-                                alt={banner.name}
-                                className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                            />
-                        ) : (
-                            <video
-                                ref={(el) => {
-                                    videoRefs.current[index] = el!;
-                                }}
-                                loop={false}
-                                muted={true}
-                                playsInline
-                                className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                onEnded={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length)}
-                            >
-                                <source src={banner.video} type="video/mp4" />
-                            </video>
-                        )}
-
-                        {/* Play Button for Mobile */}
-                        {isMobile && (
-                            <button
-                                className="absolute inset-0 flex items-center justify-center text-white rounded-full"
-                                onClick={() => handlePlay(banner.video)}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={2}
-                                    stroke="currentColor"
-                                    className="w-12 h-12 border border-white rounded-full p-4"
+                            <>
+                                {/* Mobile View: Show horizon_img */}
+                                <img
+                                    src={banner.horizon_img}
+                                    alt={banner.name}
+                                    className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                />
+                                {/* Play Button */}
+                                <button
+                                    className="absolute inset-0 flex items-center justify-center text-white rounded-full"
+                                    onClick={() => handlePlay(banner.video)}
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M5.25 5.25v13.5L19.5 12 5.25 5.25z"
-                                    />
-                                </svg>
-                            </button>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={2}
+                                        stroke="currentColor"
+                                        className="w-12 h-12 border border-white rounded-full p-4"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M5.25 5.25v13.5L19.5 12 5.25 5.25z"
+                                        />
+                                    </svg>
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                {/* Desktop View: Show video */}
+                                <video
+                                    ref={(el) => {
+                                        videoRefs.current[index] = el!;
+                                    }}
+                                    autoPlay={index === currentIndex}
+                                    loop={true}
+                                    className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                    onEnded={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length)}
+                                >
+                                    <source src={banner.video} type="video/mp4" />
+                                </video>
+                            </>
                         )}
 
-                        {/* Button for Each Video */}
+                        {/* Button for Each Banner */}
                         {index === currentIndex && (
                             <div className="absolute z-30 flex -translate-x-1/2 bottom-10 sm:bottom-12 md:bottom-14 lg:bottom-15 left-1/2">
                                 <button
