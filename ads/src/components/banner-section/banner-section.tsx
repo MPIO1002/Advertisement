@@ -53,6 +53,7 @@ const BannerSection = () => {
         value: banner.id,
       });
     }
+    window.open(banner.link, '_blank');
   };
 
   if (bannerList.length === 0) {

@@ -8,7 +8,7 @@ interface BannerData {
   name: string;
   description: string;
   link: string;
-  horizon_img: string;
+  horizon_img?: string;
 }
 
 const HeroSection = () => {
@@ -47,11 +47,22 @@ const HeroSection = () => {
     return <div className="text-center text-white">Loading...</div>;
   }
 
+  const handleBannerClick = (banner: BannerData) => {
+    if (window.gtag) {
+      window.gtag('event', 'banner_click', {
+        event_category: 'Banner',
+        event_label: banner.name,
+        value: banner.id,
+      });
+    }
+    window.open(banner.link, '_blank'); // Mở liên kết banner
+  };
+
   return isMobile ? (
     <MobileHero bannerList={bannerList} />
   ) : (
-    <DesktopHero bannerList={bannerList} />
+    <DesktopHero bannerList={bannerList} onBannerClick={handleBannerClick} />
   );
-};
+}
 
 export default HeroSection;

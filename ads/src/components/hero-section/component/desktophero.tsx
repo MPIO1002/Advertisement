@@ -11,9 +11,10 @@ interface BannerData {
 
 interface DesktopHeroProps {
     bannerList: BannerData[];
+    onBannerClick: (banner: BannerData) => void;
 }
 
-const DesktopHero: React.FC<DesktopHeroProps> = ({ bannerList }) => {
+const DesktopHero: React.FC<DesktopHeroProps> = ({ bannerList, onBannerClick }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
@@ -61,7 +62,7 @@ const DesktopHero: React.FC<DesktopHeroProps> = ({ bannerList }) => {
                             <button
                                 type="button"
                                 className="px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-2 text-sm sm:text-base lg:text-xl text-white bg-[#333333e6] rounded-sm hover:bg-[#222222e6] focus:outline-none cursor-pointer"
-                                onClick={() => (window.location.href = banner.link)}
+                                onClick={() => onBannerClick(banner)}
                             >
                                 KHÁM PHÁ NGAY
                             </button>

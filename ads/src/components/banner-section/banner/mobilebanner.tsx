@@ -59,13 +59,8 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                     className="relative max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm"
                 >
                     <a
-                        href={banner.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={(e) => {
-                            e.preventDefault(); // Prevent navigation
-                            onBannerClick(banner);
-                        }}
                     >
                         <div className="relative">
                             <img
@@ -120,7 +115,8 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-[#333333] rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300"
                                 onClick={(e) => {
-                                    e.stopPropagation(); // Ensure only this button triggers navigation
+                                    e.stopPropagation();
+                                    onBannerClick(banner) // Ensure only this button triggers navigation
                                 }}
                             >
                                 XEM
