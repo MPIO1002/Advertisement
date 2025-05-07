@@ -28,19 +28,16 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
 
   const handleNext = () => {
     const nextIndex = (currentIndex + 1) % bannerList.length;
-    setCurrentIndex(nextIndex);
-    setSelectedVideo(bannerList[nextIndex].video); // Cập nhật video tương ứng
+    setCurrentIndex(nextIndex); // Chỉ cập nhật currentIndex
   };
 
   const handlePrev = () => {
     const prevIndex = currentIndex === 0 ? bannerList.length - 1 : currentIndex - 1;
-    setCurrentIndex(prevIndex);
-    setSelectedVideo(bannerList[prevIndex].video); // Cập nhật video tương ứng
+    setCurrentIndex(prevIndex); // Chỉ cập nhật currentIndex
   };
 
   const handleDotClick = (index: number) => {
-    setCurrentIndex(index);
-    setSelectedVideo(bannerList[index].video); // Cập nhật video tương ứng
+    setCurrentIndex(index); // Chỉ cập nhật currentIndex
   };
 
   // Swipeable handlers
