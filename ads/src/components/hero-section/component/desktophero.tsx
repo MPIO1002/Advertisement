@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 
 interface BannerData {
     id: number;
@@ -29,8 +30,15 @@ const DesktopHero: React.FC<DesktopHeroProps> = ({ bannerList }) => {
         setCurrentIndex(index);
     };
 
+    // Swipeable handlers
+    const handlers = useSwipeable({
+        onSwipedLeft: handleNext,
+        onSwipedRight: handlePrev,
+        preventScrollOnSwipe: true,
+    });
+
     return (
-        <div id="default-carousel" className="relative w-full" data-carousel="slide">
+        <div id="default-carousel" className="relative w-full" data-carousel="slide" {...handlers}>
             {/* Carousel Wrapper */}
             <div className="relative h-56 sm:h-96 xl:h-[calc(80vh)] overflow-hidden">
                 {bannerList.map((banner, index) => (
