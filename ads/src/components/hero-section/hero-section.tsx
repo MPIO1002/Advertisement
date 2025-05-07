@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MobileHero from './component/mobilehero';
 import DesktopHero from './component/desktophero';
 
