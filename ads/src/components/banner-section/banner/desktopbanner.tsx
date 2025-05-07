@@ -66,9 +66,8 @@ const DesktopBanner = ({ bannerList, onBannerClick }: DesktopBannerProps) => {
       {/* Carousel Container */}
       <div
         ref={carouselRef}
-        className={`flex items-center h-[500px] overflow-x-auto space-x-4.5 scrollbar-hide ${
-          !isScrollable ? "justify-center" : ""
-        }`}
+        className={`flex items-center h-[500px] overflow-x-auto space-x-4.5 scrollbar-hide ${!isScrollable ? "justify-center" : ""
+          }`}
         style={{
           scrollbarWidth: "none", // For Firefox
           msOverflowStyle: "none", // For Internet Explorer and Edge
@@ -78,19 +77,13 @@ const DesktopBanner = ({ bannerList, onBannerClick }: DesktopBannerProps) => {
           <div
             key={banner.id}
             className="flex-shrink-0 w-[208px] h-[416px] relative rounded-lg shadow-md group transition-transform duration-300 ease-in-out hover:-translate-y-4 cursor-pointer"
+            onClick={() => onBannerClick(banner)}
           >
-            <a
-              href={banner.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => onBannerClick(banner)}
-            >
-              <img
-                src={banner.image}
-                alt={banner.name}
-                className="w-full h-full object-cover rounded-lg"
-              />
-            </a>
+            <img
+              src={banner.image}
+              alt={banner.name}
+              className="w-full h-full object-cover rounded-lg"
+            />
 
             {/* Logo at the Bottom */}
             <div className="absolute bottom-[-40px] left-1/2 transform -translate-x-1/2 z-10">
