@@ -19,8 +19,6 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const handlePlay = (video: string) => {
-    console.log('Current Index:', currentIndex); // Debug giá trị currentIndex
-    console.log('Selected Video:', video); // Debug URL video được chọn
     setSelectedVideo(video); // Cập nhật video được chọn
   };
 
@@ -48,8 +46,6 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
     onSwipedRight: handlePrev,
     preventScrollOnSwipe: true,
   });
-
-  console.log('Banner List:', bannerList);
 
   return (
     <div className="relative w-full" {...handlers}>
