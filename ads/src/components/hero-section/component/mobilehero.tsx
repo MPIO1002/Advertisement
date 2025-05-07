@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 
 interface BannerData {
   id: number;
@@ -18,11 +19,11 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const handlePlay = (video: string) => {
-    setSelectedVideo(video);
+    setSelectedVideo(video); // Set the selected video to display in the modal
   };
 
   const closeModal = () => {
-    setSelectedVideo(null);
+    setSelectedVideo(null); // Close the modal
   };
 
   const handleNext = () => {
@@ -39,8 +40,15 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
     setCurrentIndex(index);
   };
 
+  // Swipeable handlers
+  const handlers = useSwipeable({
+    onSwipedLeft: handleNext,
+    onSwipedRight: handlePrev,
+    preventScrollOnSwipe: true,
+  });
+
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" {...handlers}>
       {/* Modal for Video */}
       {selectedVideo && (
         <div
@@ -53,7 +61,7 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-2 right-2 text-white text-2xl"
+              className="absolute top-2 right-2 text-white text-xl"
               onClick={closeModal}
             >
               &times;
@@ -92,7 +100,7 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="currentColor"
-                className="w-12 h-12 border border-white rounded-full p-4"
+                className="w-8 h-8 border border-white rounded-full p-2"
               >
                 <path
                   strokeLinecap="round"
@@ -106,12 +114,12 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
       </div>
 
       {/* Slider Indicators */}
-      <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
+      <div className="absolute z-30 flex -translate-x-1/2 bottom-3 left-1/2 space-x-2">
         {bannerList.map((_, index) => (
           <button
             key={index}
             type="button"
-            className={`w-3 h-3 rounded-full ${
+            className={`w-2 h-2 rounded-full ${
               index === currentIndex ? 'bg-white' : 'bg-gray-400'
             }`}
             aria-current={index === currentIndex}
@@ -121,59 +129,9 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
         ))}
       </div>
 
-      {/* Slider Controls */}
-      <button
-        type="button"
-        className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        onClick={handlePrev}
-      >
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-          <svg
-            className="w-4 h-4 text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5 1 1 5l4 4"
-            />
-          </svg>
-          <span className="sr-only">Previous</span>
-        </span>
-      </button>
-      <button
-        type="button"
-        className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        onClick={handleNext}
-      >
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white">
-          <svg
-            className="w-4 h-4 text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m1 9 4-4-4-4"
-            />
-          </svg>
-          <span className="sr-only">Next</span>
-        </span>
-      </button>
-
       {/* Curve Background */}
       <div
-        className="absolute bottom-0 left-0 w-full h-2 sm:h-6 md:h-8 bg-no-repeat bg-cover z-10"
+        className="absolute bottom-0 left-0 w-full h-2 sm:h-4 bg-no-repeat bg-cover z-10"
         style={{ backgroundImage: "url('/assets/curve-bg.png')" }}
       ></div>
     </div>
