@@ -7,7 +7,7 @@ interface BannerData {
   name: string;
   description: string;
   link: string;
-  horizon_img: string;
+  horizon_img?: string;
 }
 
 interface MobileHeroProps {
