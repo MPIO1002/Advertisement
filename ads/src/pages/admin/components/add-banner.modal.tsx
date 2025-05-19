@@ -45,7 +45,7 @@ const AddBannerModal: React.FC<AddBannerModalProps> = ({ open, onClose, onAdded 
         if (form.horizon_img) formData.append("horizon_img", form.horizon_img);
 
         try {
-            const res = await fetch("http://localhost:3000/banners", {
+            const res = await fetch("http://103.92.25.7:4000/banners", {
                 method: "POST",
                 body: formData,
             });

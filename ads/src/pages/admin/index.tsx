@@ -32,7 +32,7 @@ const AdminBannerPage: React.FC = () => {
   const [notiType, setNotiType] = useState<"success" | "danger">("success");
 
   useEffect(() => {
-    fetch("http://localhost:3000/banners")
+    fetch("http://103.92.25.7:4000/banners")
       .then((res) => res.json())
       .then((data) => {
         setBanners(data);
@@ -93,7 +93,7 @@ const AdminBannerPage: React.FC = () => {
   const handleConfirmDelete = async () => {
     try {
       for (const id of selectedIds) {
-        const res = await fetch(`http://localhost:3000/banners/${id}`, { method: "DELETE" });
+        const res = await fetch(`http://103.92.25.7:4000/banners/${id}`, { method: "DELETE" });
         if (!res.ok) throw new Error();
       }
       setBanners((prev) => prev.filter((b) => !selectedIds.includes(b.id)));
