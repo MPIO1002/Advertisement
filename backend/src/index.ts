@@ -4,11 +4,15 @@ import { json } from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import request from 'request';
+import http from 'http';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+const server = http.createServer(app);
+server.timeout = 10 * 60 * 1000;
 
 // Middleware
 app.use(json());

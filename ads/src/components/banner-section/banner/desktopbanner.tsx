@@ -82,6 +82,7 @@ const DesktopBanner = ({ bannerList, onBannerClick }: DesktopBannerProps) => {
             <img
               src={banner.image}
               alt={banner.name}
+              loading="lazy"
               className="w-full h-full object-cover rounded-lg"
             />
 
@@ -90,6 +91,7 @@ const DesktopBanner = ({ bannerList, onBannerClick }: DesktopBannerProps) => {
               <img
                 src={banner.logo}
                 alt={`${banner.name} logo`}
+                loading="lazy"
                 className="w-20 h-20"
               />
             </div>

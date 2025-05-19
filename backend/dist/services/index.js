@@ -24,35 +24,6 @@ const index_1 = __importDefault(require("../db/index"));
     }
 }))();
 class Service {
-    addBanner(banner) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield index_1.default.query('INSERT INTO banner (image, name, description) VALUES ($1, $2, $3) RETURNING *', [banner.image, banner.name, banner.description]);
-            return result.rows[0];
-        });
-    }
-    updateBanner(id, updatedData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const fields = [];
-            const values = [];
-            let index = 1;
-            for (const key in updatedData) {
-                fields.push(`${key} = $${index}`);
-                values.push(updatedData[key]);
-                index++;
-            }
-            const query = `UPDATE banner SET ${fields.join(', ')} WHERE id = $${index} RETURNING *`;
-            values.push(id);
-            const result = yield index_1.default.query(query, values);
-            return result.rows[0] || null;
-        });
-    }
-    deleteBanner(id) {
-        var _a;
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield index_1.default.query('DELETE FROM banner WHERE id = $1', [id]);
-            return ((_a = result.rowCount) !== null && _a !== void 0 ? _a : 0) > 0;
-        });
-    }
     getBanners() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -63,6 +34,28 @@ class Service {
                 console.error('Error fetching banners:', error);
                 throw new Error('Failed to fetch banners');
             }
+        });
+    }
+    addBanner(banner) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { image, name, description, link, logo, video, horizon_img } = banner;
+            const result = yield index_1.default.query(`INSERT INTO banner (image, name, description, link, logo, video, horizon_img)
+            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [image, name, description, link, logo, video, horizon_img]);
+            return result.rows[0];
+        });
+    }
+    updateBanner(id, banner) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const fields = Object.keys(banner);
+            const values = Object.values(banner);
+            const setClause = fields.map((field, index) => `${field} = $${index + 2}`).join(', ');
+            const result = yield index_1.default.query(`UPDATE banner SET ${setClause} WHERE id = $1 RETURNING *`, [id, ...values]);
+            return result.rows[0];
+        });
+    }
+    deleteBanner(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield index_1.default.query('DELETE FROM banner WHERE id = $1', [id]);
         });
     }
 }

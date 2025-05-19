@@ -6,3 +6,18 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.notification-slide-in {
+  animation: slide-in-right 0.3s cubic-bezier(0.4,0,0.2,1);
+}

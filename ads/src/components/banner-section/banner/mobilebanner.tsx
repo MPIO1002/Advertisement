@@ -47,6 +47,7 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                             src={selectedVideo}
                             controls
                             autoPlay
+                            playsInline
                             className="w-full h-auto"
                         />
                     </div>
@@ -66,6 +67,7 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                             <img
                                 src={banner.horizon_img} // Use horizon_img instead of video
                                 alt={banner.name}
+                                loading="lazy"
                                 className="rounded-t w-full h-auto"
                             />
                             <button
@@ -98,6 +100,7 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                             <img
                                 src={banner.logo}
                                 alt={`${banner.name} logo`}
+                                loading="lazy"
                                 className="w-8 h-8 mr-2"
                             />
                             {/* Name */}

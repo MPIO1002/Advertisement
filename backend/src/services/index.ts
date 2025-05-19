@@ -11,37 +11,6 @@ import { Banner } from '../models';
 })();
 
 export class Service {
-    async addBanner(banner: Omit<Banner, 'id'>): Promise<Banner> {
-        const result = await pool.query(
-            'INSERT INTO banner (image, name, description) VALUES ($1, $2, $3) RETURNING *',
-            [banner.image, banner.name, banner.description]
-        );
-        return result.rows[0];
-    }
-
-    async updateBanner(id: number, updatedData: Partial<Banner>): Promise<Banner | null> {
-        const fields = [];
-        const values = [];
-        let index = 1;
-
-        for (const key in updatedData) {
-            fields.push(`${key} = $${index}`);
-            values.push((updatedData as any)[key]);
-            index++;
-        }
-
-        const query = `UPDATE banner SET ${fields.join(', ')} WHERE id = $${index} RETURNING *`;
-        values.push(id);
-
-        const result = await pool.query(query, values);
-        return result.rows[0] || null;
-    }
-
-    async deleteBanner(id: number): Promise<boolean> {
-        const result = await pool.query('DELETE FROM banner WHERE id = $1', [id]);
-        return (result.rowCount ?? 0) > 0;
-    }
-
     async getBanners(): Promise<Banner[]> {
         try {
             const result = await pool.query('SELECT * FROM banner');
@@ -50,5 +19,30 @@ export class Service {
             console.error('Error fetching banners:', error);
             throw new Error('Failed to fetch banners');
         }
+    }
+
+    async addBanner(banner: Omit<Banner, 'id'>): Promise<Banner> {
+        const { image, name, description, link, logo, video, horizon_img } = banner;
+        const result = await pool.query(
+            `INSERT INTO banner (image, name, description, link, logo, video, horizon_img)
+            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+            [image, name, description, link, logo, video, horizon_img]
+        );
+        return result.rows[0];
+    }
+
+    async updateBanner(id: number, banner: Partial<Banner>): Promise<Banner> {
+        const fields = Object.keys(banner);
+        const values = Object.values(banner);
+        const setClause = fields.map((field, index) => `${field} = $${index + 2}`).join(', ');
+        const result = await pool.query(
+            `UPDATE banner SET ${setClause} WHERE id = $1 RETURNING *`,
+            [id, ...values]
+        );
+        return result.rows[0];
+    }
+
+    async deleteBanner(id: number): Promise<void> {
+        await pool.query('DELETE FROM banner WHERE id = $1', [id]);
     }
 }
