@@ -1,21 +1,15 @@
-import './App.css'
-import Navbar from './components/navbar/navbar'
-import HeroSection from './components/hero-section/hero-section'
-import BannerSection from './components/banner-section/banner-section'
-import Footer from './components/footer/footer'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import HomePage from "./pages/home";
+import AdminBannerPage from "./pages/admin";
 
-function App() {
+const App: React.FC = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/admin" element={<AdminBannerPage />} />
+    </Routes>
+  </Router>
+);
 
-  return (
-    <div className="font-family">
-      <>
-        <Navbar />
-        <HeroSection />
-        <BannerSection />
-        <Footer />
-      </>
-    </div>
-  )
-}
-
-export default App
+export default App;

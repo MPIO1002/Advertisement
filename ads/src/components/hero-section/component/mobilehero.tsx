@@ -64,6 +64,7 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
               src={selectedVideo}
               controls
               autoPlay
+              playsInline
               className="w-full h-auto"
             />
           </div>
@@ -81,6 +82,7 @@ const MobileHero: React.FC<MobileHeroProps> = ({ bannerList }) => {
             <img
               src={banner.horizon_img}
               alt={banner.name}
+              loading="lazy"
               className="w-full h-auto"
             />
             <button

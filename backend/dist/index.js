@@ -9,9 +9,12 @@ const body_parser_1 = require("body-parser");
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const request_1 = __importDefault(require("request"));
+const http_1 = __importDefault(require("http"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
+const server = http_1.default.createServer(app);
+server.timeout = 10 * 60 * 1000;
 // Middleware
 app.use((0, body_parser_1.json)());
 app.use((0, cors_1.default)({
