@@ -7,7 +7,7 @@ const redis = new Redis({
   port: Number(process.env.REDIS_PORT) || 6379,
   retryStrategy: (times) => {
     const delay = Math.min(times * 100, 2000); // tối đa 2 giây
-    console.log(`🔁 Redis retry after ${delay}ms`);
+    console.log(`Redis retry after ${delay}ms`);
     return delay;
   },
 });
