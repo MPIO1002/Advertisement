@@ -83,7 +83,7 @@ const UpdateBannerModal: React.FC<UpdateBannerModalProps> = ({
         }
 
         try {
-            const res = await fetch(`http://localhost:3000/banners/${banner.id}`, {
+            const res = await fetch(`http://103.92.25.7:4000/banners/${banner.id}`, {
                 method: "PUT",
                 body: formData,
             });
