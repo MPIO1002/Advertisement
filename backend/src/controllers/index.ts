@@ -37,9 +37,9 @@ class IndexController {
             { name: 'horizon_img', maxCount: 1 },
         ]), this.updateBanner.bind(this));
         this.router.delete('/banners/:id', this.deleteBanner.bind(this));
-
+        this.router.post('/login', this.login.bind(this));
     }
-    
+
     //Ứng dụng cache để tối ưu memory usage
     private async getBanners(req: Request, res: Response): Promise<void> {
         try {
@@ -47,7 +47,6 @@ class IndexController {
             const cachedData = await redis.get(cacheKey);
 
             if (cachedData) {
-                console.log('Banners from Redis');
                 res.status(200).json(JSON.parse(cachedData));
                 return;
             }
@@ -136,6 +135,7 @@ class IndexController {
             res.status(500).json({ error: 'Failed to update banner' });
         }
     }
+
     private async deleteBanner(req: Request, res: Response): Promise<void> {
         try {
             const id = Number(req.params.id);
@@ -144,6 +144,20 @@ class IndexController {
             res.status(204).send();
         } catch (error) {
             res.status(500).json({ error: 'Failed to delete banner' });
+        }
+    }
+    
+    private async login(req: Request, res: Response): Promise<void> {
+        try {
+            const { username, password } = req.body;
+            if (!username || !password) {
+                res.status(400).json({ error: 'Username and password are required' });
+                return;
+            }
+            const result = await this.service.login(username, password);
+            res.status(200).json(result);
+        } catch (error) {
+            res.status(401).json({ error: 'Invalid username or password' });
         }
     }
 }
