@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Notification from "../admin/components/notification";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -62,8 +64,8 @@ const LoginPage: React.FC = () => {
           />
         </div>
       </nav>
-      <div className="flex items-center justify-center min-h-[80vh]">
-        <div className="w-full max-w-md p-8 bg-white rounded shadow">
+      <div className="flex bg-[#fafafa] items-center justify-center min-h-[80vh]">
+        <div className="w-full max-w-md p-8 bg-white rounded shadow-2xl">
           <h2 className="text-2xl font-semibold mb-6 text-center">Đăng nhập</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
@@ -88,21 +90,7 @@ const LoginPage: React.FC = () => {
                 className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
                 onClick={() => setShowPassword((v) => !v)}
               >
-                {showPassword ? (
-                  // Eye open icon
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 0c0 5-4.03 9-9 9S3 17 3 12 7.03 3 12 3s9 4.03 9 9z" />
-                  </svg>
-                ) : (
-                  // Eye closed icon
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9-4-9-7 0-1.657 1.343-3 3-3 .512 0 1.02.08 1.5.23m3.5-2.23c.98-.13 1.98-.2 3-.2 5 0 9 4 9 7 0 1.657-1.343 3-3 3-.512 0-1.02-.08-1.5-.23m-3.5 2.23l-6.364-6.364M3 3l18 18" />
-                  </svg>
-                )}
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
               </button>
             </div>
             <button
