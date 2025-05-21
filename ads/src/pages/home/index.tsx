@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
 
       {/* Floating Button */}
       <button
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#333333] text-white flex items-center justify-center shadow-lg z-50 hover:bg-[#222222] hover:scale-125 transition duration-300"
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#333333] text-white flex items-center justify-center shadow-lg z-50 hover:bg-[#222222] hover:scale-125 transition duration-300 cursor-pointer"
         onClick={() => setShowPopup(true)}
         aria-label="Thông tin"
       >
@@ -39,14 +39,7 @@ const HomePage: React.FC = () => {
             onClick={e => e.stopPropagation()}
           >
             <h2 className="text-xl font-bold mb-4">Thông tin</h2>
-            <p>Đây là nội dung popup. Bạn có thể đặt thông tin hướng dẫn hoặc liên hệ ở đây.</p>
-            <button
-              className="absolute top-2 right-2 text-gray-400 hover:text-gray-700"
-              onClick={() => setShowPopup(false)}
-              aria-label="Đóng"
-            >
-              ×
-            </button>
+            <p>Đây là nội dung popup. Bạn có thể đặt thông tin hướng dẫn hoặc liên hệ ở đây.</p>     
           </div>
         </div>
       )}
