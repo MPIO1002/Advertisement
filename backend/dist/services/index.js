@@ -26,17 +26,9 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
     }
 }))();
 const JWT_SECRET = process.env.JWT_SECRET;
-console.log('JWT_SECRET:', process.env.JWT_SECRET);
 if (!JWT_SECRET) {
     throw new Error('JWT_SECRET is not defined in environment variables');
 }
-const plainPassword = 'ggo_advertisement';
-const saltRounds = 10;
-bcrypt_1.default.hash(plainPassword, saltRounds, (err, hash) => {
-    if (err)
-        throw err;
-    console.log('Hashed password:', hash);
-});
 class Service {
     getBanners() {
         return __awaiter(this, void 0, void 0, function* () {
