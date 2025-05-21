@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Service = void 0;
 const index_1 = __importDefault(require("../db/index"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield index_1.default.query('SELECT 1');
@@ -23,6 +25,11 @@ const index_1 = __importDefault(require("../db/index"));
         console.error('Database connection failed:', error);
     }
 }))();
+const JWT_SECRET = process.env.JWT_SECRET;
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+}
 class Service {
     getBanners() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -56,6 +63,22 @@ class Service {
     deleteBanner(id) {
         return __awaiter(this, void 0, void 0, function* () {
             yield index_1.default.query('DELETE FROM banner WHERE id = $1', [id]);
+        });
+    }
+    login(username, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield index_1.default.query('SELECT * FROM account WHERE username = $1', [username]);
+            const user = result.rows[0];
+            if (!user) {
+                throw new Error('Invalid username or password');
+            }
+            const passwordMatch = yield bcrypt_1.default.compare(password, user.password);
+            if (!passwordMatch) {
+                throw new Error('Invalid username or password');
+            }
+            const payload = { id: user.id, username: user.username };
+            const accessToken = jsonwebtoken_1.default.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+            return { accessToken };
         });
     }
 }

@@ -1,5 +1,7 @@
 import pool from '../db/index';
 import { Banner } from '../models';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 (async () => {
     try {
@@ -9,6 +11,12 @@ import { Banner } from '../models';
         console.error('Database connection failed:', error);
     }
 })();
+
+const JWT_SECRET = process.env.JWT_SECRET;
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+}
 
 export class Service {
     async getBanners(): Promise<Banner[]> {
@@ -44,5 +52,23 @@ export class Service {
 
     async deleteBanner(id: number): Promise<void> {
         await pool.query('DELETE FROM banner WHERE id = $1', [id]);
+    }
+
+    async login(username: string, password: string): Promise<{ accessToken: string }> {
+        const result = await pool.query('SELECT * FROM account WHERE username = $1', [username]);
+        const user = result.rows[0];
+        if (!user) {
+            throw new Error('Invalid username or password');
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            throw new Error('Invalid username or password');
+        }
+
+        const payload = { id: user.id, username: user.username };
+        const accessToken = jwt.sign(payload, JWT_SECRET as string, { expiresIn: '1h' });
+
+        return { accessToken };
     }
 }
