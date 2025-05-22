@@ -97,9 +97,9 @@ const DesktopBanner = ({ bannerList, onBannerClick }: DesktopBannerProps) => {
             </div>
 
             {/* Overlay on Hover */}
-            <div className="absolute inset-0 bg-[#51b6ffd5] opacity-0 rounded-lg group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-4 pointer-event-none">
+            <div className="absolute inset-0 bg-black/50 opacity-0 rounded-lg group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-4 pointer-event-none">
               <h3 className="text-lg font-extrabold text-white">{banner.name}</h3>
-              <p className="mt-2 text-sm font-medium text-gray-300">{banner.description}</p>
+              <p className="mt-2 text-sm font-medium text-white">{banner.description}</p>
             </div>
           </div>
         ))}
