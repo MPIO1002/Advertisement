@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import DesktopBanner from './banner/desktopbanner';
 import MobileBanner from './banner/mobilebanner';
+import { getMobileOS } from "../../identify_devices"
 
 interface BannerData {
   id: number;
@@ -9,7 +10,8 @@ interface BannerData {
   description: string;
   logo: string;
   video: string;
-  link: string;
+  link_ios: string;
+  link_android: string;
   horizon_img: string;
 }
 
@@ -53,7 +55,12 @@ const BannerSection = () => {
         value: banner.id,
       });
     }
-    window.open(banner.link, '_blank');
+    // Chọn link phù hợp với thiết bị
+    const os = getMobileOS();
+    let link = banner.link_ios || banner.link_android; // Mặc định nếu không xác định được
+    if (os === "android" && banner.link_android) link = banner.link_android;
+    else if (os === "ios" && banner.link_ios) link = banner.link_ios;
+    window.open(link, '_blank');
   };
 
   if (bannerList.length === 0) {
