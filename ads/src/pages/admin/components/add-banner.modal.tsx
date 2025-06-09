@@ -106,7 +106,7 @@ const AddBannerModal: React.FC<AddBannerModalProps> = ({ open, onClose, onAdded 
                         <div className="mb-3">
                             <label className="block mb-1 font-medium">Link IOS</label>
                             <input
-                                name="link"
+                                name="link_ios"
                                 required
                                 className="w-full border border-gray-200 rounded px-3 py-2"
                                 value={form.link_ios}
