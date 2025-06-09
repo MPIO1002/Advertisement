@@ -17,7 +17,8 @@ const UpdateBannerModal: React.FC<UpdateBannerModalProps> = ({
     const [form, setForm] = useState({
         name: banner?.name || "",
         description: banner?.description || "",
-        link: banner?.link || "",
+        link_ios: banner?.link_ios || "",
+        link_android: banner?.link_android || "",
         image: undefined as File | undefined,
         logo: undefined as File | undefined,
         video: undefined as File | undefined,
@@ -32,7 +33,8 @@ const UpdateBannerModal: React.FC<UpdateBannerModalProps> = ({
             setForm({
                 name: banner.name || "",
                 description: banner.description || "",
-                link: banner.link || "",
+                link_ios: banner.link_ios || "",
+                link_android: banner.link_android || "",
                 image: undefined,
                 logo: undefined,
                 video: undefined,
@@ -58,7 +60,8 @@ const UpdateBannerModal: React.FC<UpdateBannerModalProps> = ({
         const formData = new FormData();
         formData.append("name", form.name);
         formData.append("description", form.description);
-        formData.append("link", form.link);
+        formData.append("link_ios", form.link_ios);
+        formData.append("link_android", form.link_android);
 
         // Nếu có file mới thì gửi file, không thì gửi lại url cũ
         if (form.image) {
@@ -136,15 +139,26 @@ const UpdateBannerModal: React.FC<UpdateBannerModalProps> = ({
                             />
                         </div>
                         <div className="mb-3">
-                            <label className="block mb-1 font-medium">Link</label>
+                            <label className="block mb-1 font-medium">Link IOS</label>
                             <input
-                                name="link"
+                                name="link_ios"
                                 required
                                 className="w-full border border-gray-200 rounded px-3 py-2"
-                                value={form.link}
+                                value={form.link_ios}
                                 onChange={handleChange}
                             />
                         </div>
+                        <div className="mb-3">
+                            <label className="block mb-1 font-medium">Link Android</label>
+                            <input
+                                name="link_android"
+                                required
+                                className="w-full border border-gray-200 rounded px-3 py-2"
+                                value={form.link_android}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <p className="text-red-800">*Nếu game có trang chủ thì để cả hai link là link trang chủ</p>
                         <div className="mb-3">
                             <label className="block mb-1 font-medium">Video</label>
                             {banner?.video && (
