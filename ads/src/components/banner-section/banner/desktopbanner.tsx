@@ -7,7 +7,8 @@ interface BannerData {
   description: string;
   logo: string;
   video: string;
-  link: string;
+  link_ios: string;
+  link_android: string;
   horizon_img: string;
 }
 

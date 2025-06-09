@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import MobileHero from './component/mobilehero';
 import DesktopHero from './component/desktophero';
+import { getMobileOS } from '../../identify_devices';
 
 interface BannerData {
   id: number;
   video: string;
   name: string;
   description: string;
-  link: string;
+  link_ios: string;
+  link_android: string;
   horizon_img?: string;
 }
 
@@ -55,7 +57,12 @@ const HeroSection = () => {
         value: banner.id,
       });
     }
-    window.open(banner.link, '_blank'); // Mở liên kết banner
+    // Chọn link phù hợp thiết bị
+    const os = getMobileOS();
+    let link = banner.link_ios || banner.link_android;
+    if (os === "android" && banner.link_android) link = banner.link_android;
+    else if (os === "ios" && banner.link_ios) link = banner.link_ios;
+    window.open(link, '_blank');
   };
 
   return isMobile ? (

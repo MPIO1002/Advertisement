@@ -6,7 +6,8 @@ interface BannerData {
     video: string;
     name: string;
     description: string;
-    link: string;
+    link_ios: string;
+    link_android: string;
 }
 
 interface DesktopHeroProps {

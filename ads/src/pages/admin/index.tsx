@@ -10,7 +10,6 @@ interface Banner {
   id: number;
   name: string;
   description: string;
-  link: string;
   image: string;
   logo: string;
   video?: string;
@@ -44,8 +43,7 @@ const AdminBannerPage: React.FC = () => {
   const filteredBanners = banners.filter(
     (banner) =>
       banner.name.toLowerCase().includes(search.toLowerCase()) ||
-      banner.description.toLowerCase().includes(search.toLowerCase()) ||
-      banner.link.toLowerCase().includes(search.toLowerCase())
+      banner.description.toLowerCase().includes(search.toLowerCase())
   );
   const totalPages = Math.ceil(filteredBanners.length / PAGE_SIZE);
   const paginatedBanners = filteredBanners.slice(
@@ -209,7 +207,6 @@ const AdminBannerPage: React.FC = () => {
                   </th>
                   <th className="px-6 py-3 w-1/10 text-center">Tên</th>
                   <th className="px-6 py-3 w-2/10 text-center">Mô tả</th>
-                  <th className="px-6 py-3 w-1/10 text-center">Link</th>
                   <th className="px-6 py-3 text-center">Ảnh dọc</th>
                   <th className="px-6 py-3 text-center">Logo</th>
                   <th className="px-6 py-3 text-center">Ảnh ngang</th>
@@ -243,16 +240,6 @@ const AdminBannerPage: React.FC = () => {
                       {banner.name}
                     </td>
                     <td className="px-6 py-4">{banner.description}</td>
-                    <td className="px-6 py-4">
-                      <a
-                        href={banner.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 underline"
-                      >
-                        {banner.link}
-                      </a>
-                    </td>
                     <td className="px-6 py-4">
                       {banner.image && (
                         <img
@@ -351,7 +338,7 @@ const AdminBannerPage: React.FC = () => {
               onClose={() => setShowAddBanner(false)}
               onAdded={() => {
                 // Sau khi thêm mới, reload lại danh sách banner
-                fetch("http://localhost:3000/banners")
+                fetch("http://103.92.25.7:4000/banners")
                   .then((res) => res.json())
                   .then((data) => setBanners(data));
               }}
@@ -361,7 +348,7 @@ const AdminBannerPage: React.FC = () => {
               onClose={() => setShowUpdateBanner(false)}
               onUpdated={() => {
                 // Sau khi cập nhật, reload lại danh sách banner
-                fetch("http://localhost:3000/banners")
+                fetch("http://103.92.25.7:4000/banners")
                   .then((res) => res.json())
                   .then((data) => setBanners(data));
               }}

@@ -5,7 +5,8 @@ interface BannerData {
     image: string;
     name: string;
     description: string;
-    link: string;
+    link_ios: string;
+    link_android: string;
     video: string;
     logo: string;
     horizon_img: string;
@@ -105,7 +106,13 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                             />
                             {/* Name */}
                             <div className="flex-1">
-                                <a href={banner.link} target="_blank" rel="noopener noreferrer">
+                                <a
+                                    href="#"
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        onBannerClick(banner);
+                                    }}
+                                >
                                     <h5 className="text-sm font-bold tracking-tight text-gray-900 text-left">
                                         {banner.name}
                                     </h5>
@@ -113,13 +120,12 @@ const MobileBanner = ({ bannerList, onBannerClick }: MobileBannerProps) => {
                             </div>
                             {/* Read More Button on the Right */}
                             <a
-                                href={banner.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href="#"
                                 className="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-[#333333] rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300"
-                                onClick={(e) => {
+                                onClick={e => {
+                                    e.preventDefault();
                                     e.stopPropagation();
-                                    onBannerClick(banner) // Ensure only this button triggers navigation
+                                    onBannerClick(banner);
                                 }}
                             >
                                 XEM
