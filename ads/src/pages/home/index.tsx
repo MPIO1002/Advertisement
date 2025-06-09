@@ -3,8 +3,8 @@ import Navbar from "../../components/navbar/navbar";
 import HeroSection from "../../components/hero-section/hero-section";
 import BannerSection from "../../components/banner-section/banner-section";
 import Footer from "../../components/footer/footer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const HomePage: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -17,13 +17,13 @@ const HomePage: React.FC = () => {
       <Footer />
 
       {/* Floating Button */}
-      <button
+      {/* <button
         className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#333333] text-white flex items-center justify-center shadow-lg z-50 hover:bg-[#222222] hover:scale-125 transition duration-300 cursor-pointer"
         onClick={() => setShowPopup(true)}
         aria-label="Thông tin"
       >
         <FontAwesomeIcon icon={faCircleInfo} size="xl" />
-      </button>
+      </button> */}
 
       {/* Overlay & Popup */}
       {showPopup && (
