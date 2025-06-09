@@ -59,7 +59,7 @@ const HeroSection = () => {
     }
     // Chọn link phù hợp thiết bị
     const os = getMobileOS();
-    let link = banner.link_ios || banner.link_android;
+    let link = banner.link_android;
     if (os === "android" && banner.link_android) link = banner.link_android;
     else if (os === "ios" && banner.link_ios) link = banner.link_ios;
     window.open(link, '_blank');
