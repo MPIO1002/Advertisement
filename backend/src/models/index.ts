@@ -3,7 +3,8 @@ export interface Banner {
     image: string;
     name: string;
     description: string;
-    link: string;
+    link_ios: string;
+    link_android: string;
     logo: string;
     video: string;
     horizon_img: string;

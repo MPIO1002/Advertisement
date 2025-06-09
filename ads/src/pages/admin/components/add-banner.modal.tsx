@@ -11,7 +11,8 @@ const AddBannerModal: React.FC<AddBannerModalProps> = ({ open, onClose, onAdded 
     const [form, setForm] = useState({
         name: "",
         description: "",
-        link: "",
+        link_ios: "",
+        link_android: "",
         image: undefined as File | undefined,
         logo: undefined as File | undefined,
         video: undefined as File | undefined,
@@ -38,7 +39,8 @@ const AddBannerModal: React.FC<AddBannerModalProps> = ({ open, onClose, onAdded 
         const formData = new FormData();
         formData.append("name", form.name);
         formData.append("description", form.description);
-        formData.append("link", form.link);
+        formData.append("link_ios", form.link_ios);
+        formData.append("link_android", form.link_android);
         if (form.image) formData.append("image", form.image);
         if (form.logo) formData.append("logo", form.logo);
         if (form.video) formData.append("video", form.video);
@@ -102,15 +104,26 @@ const AddBannerModal: React.FC<AddBannerModalProps> = ({ open, onClose, onAdded 
                             />
                         </div>
                         <div className="mb-3">
-                            <label className="block mb-1 font-medium">Link</label>
+                            <label className="block mb-1 font-medium">Link IOS</label>
                             <input
                                 name="link"
                                 required
                                 className="w-full border border-gray-200 rounded px-3 py-2"
-                                value={form.link}
+                                value={form.link_ios}
                                 onChange={handleChange}
                             />
                         </div>
+                        <div className="mb-3">
+                            <label className="block mb-1 font-medium">Link Android</label>
+                            <input
+                                name="link_android"
+                                required
+                                className="w-full border border-gray-200 rounded px-3 py-2"
+                                value={form.link_android}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <p className="text-red-800">*Nếu game có trang chủ thì để hai link là link trang chủ</p>
                     </div>
                     <div>
                         <div className="mb-3">

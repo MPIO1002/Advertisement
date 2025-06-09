@@ -30,11 +30,11 @@ export class Service {
     }
 
     async addBanner(banner: Omit<Banner, 'id'>): Promise<Banner> {
-        const { image, name, description, link, logo, video, horizon_img } = banner;
+        const { image, name, description, link_ios, logo, video, horizon_img, link_android } = banner;
         const result = await pool.query(
-            `INSERT INTO banner (image, name, description, link, logo, video, horizon_img)
-            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-            [image, name, description, link, logo, video, horizon_img]
+            `INSERT INTO banner (image, name, description, link_ios, logo, video, horizon_img, link_android)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+            [image, name, description, link_ios, logo, video, horizon_img, link_android]
         );
         return result.rows[0];
     }
