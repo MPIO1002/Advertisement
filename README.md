@@ -32,9 +32,9 @@ Add New Banners: Easily upload and publish new advertising banners for games.
 Edit Existing Banners: Modify banner details, images, and associated game links.
 
 Delete Banners: Remove outdated or irrelevant banners with a simple click.</p>
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/6b079166-ee24-4963-a3e3-d56dcdcbac8d" alt="Admin Panel Screenshot 1" width="40%" style="display: inline-block; margin: 0 1%;" />
-</p>
+
+  <img src="https://github.com/user-attachments/assets/6b079166-ee24-4963-a3e3-d56dcdcbac8d" alt="Admin Panel Screenshot 1" />
+
 <h3>Technologies Used</h3>
 <p>Front-end: React.js
 
