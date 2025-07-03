@@ -60,7 +60,7 @@
 ---
 
 <h2>How to Use</h2>
-<p>Simply visit the website to start exploring. You can use the navigation bar to switch between the Heroes, Treasures, and Spirit Beasts sections. Utilize the search and filter functionalities to refine your results.</p>
+<p>Simply visit the website to start exploring.</p>
 <p><b>Link:</b> <a href="http://103.92.25.7:8081/">http://103.92.25.7:8081/</a></p>
 
 ---
